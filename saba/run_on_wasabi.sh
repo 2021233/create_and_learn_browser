@@ -19,7 +19,12 @@ then
   echo $OS_PATH" exists"
   echo "pulling new changes..."
   cd $TARGET_PATH
-  git clone --branch for_saba git@github.com:hikalium/wasabi.git
+  git pull origin for_saba
+else
+  echo $OS_PATH" dosen't exist"
+  echo "cloneing wasabi project..."
+  cd $TARGET_PATH
+  git clone --branch for_saba https://github.com/hikalium/wasabi.git
 fi
 
 cd $HOME_PATH
