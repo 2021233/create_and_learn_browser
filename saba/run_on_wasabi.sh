@@ -18,7 +18,7 @@ if [ -d $OS_PATH ]
 then
   echo $OS_PATH" exists"
   echo "pulling new changes..."
-  cd $TARGET_PATH
+  cd $OS_PATH
   git pull origin for_saba
 else
   echo $OS_PATH" dosen't exist"
@@ -36,4 +36,4 @@ then
 fi
 
 make build 
-$OS_PATH/scripts/run_with_app.sh ./terget/x86_64-unknown-none/release/$APP_NAME
+$OS_PATH/scripts/run_with_app.sh ./target/x86_64-unknown-none/release/$APP_NAME
