@@ -1,6 +1,6 @@
 #![no_std]
 
-extern create alloc;
+extern crate alloc;
 
 pub mod error;
 pub mod http;
