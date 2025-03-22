@@ -1,16 +1,18 @@
-#![no_std]
-extern create alloc;
+extern crate alloc;
+
 use alloc::string::String;
+use alloc::vec::Vec;
+use alloc::format;
+use noli::net::lookup_host;
+use noli::net::SocketAddr;
+use noli::net::TcpStream;
+use crate::alloc::string::ToString;
 use saba_core::error::Error;
 use saba_core::http::HttpResponse;
-use noli::net::TcpStream;
-use alloc::vec::Vec;
-
-pub mod http;
 
 pub struct HttpClient {}
 
-impl HTTP Client {
+impl HttpClient {
     pub fn new() -> Self {
         Self {}
     }
@@ -32,7 +34,7 @@ impl HTTP Client {
 
         let socket_addr: SocketAddr = (ips[0],port).into();
 
-        let mut strteam = match TcpStream::connect(socket_addr) {
+        let mut stream = match TcpStream::connect(socket_addr) {
             Ok(stream) => stream,
             Err(_) => {
                 return Err(Error::Network(

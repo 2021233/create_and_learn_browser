@@ -1,18 +1,15 @@
-#![no_std]
-
 extern crate alloc;
 
-pub mod http;
-pub mod url;
 use alloc::string::String;
 use alloc::vec::Vec;
 use alloc::format;
+use crate::alloc::string::ToString;
 use crate::error::Error;
 
 #[derive(Debug, Clone)]
 pub struct HttpResponse {
     version: String,
-    Status_code: u32,
+    status_code: u32,
     reason: String,
     headers: Vec<Header>,
     body: String,
@@ -24,7 +21,7 @@ impl HttpResponse {
     }
 
     pub fn status_code(&self) -> u32 {
-        self.status_code.clone()
+        self.status_code
     }
 
     pub fn reason(&self) -> String {
@@ -45,9 +42,8 @@ impl HttpResponse {
                 return Ok(h.value.clone());
             }
         }
+        Err(format!("failed to find {} in headers", name))
     }
-
-    Err(format!("failed to find {} in headers", name))
 
     pub fn new(raw_response: String) -> Result<Self, Error> {
         let preprocessed_response = raw_response.trim_start().replace("\n\r", "\n");
@@ -77,12 +73,12 @@ impl HttpResponse {
             None => (Vec::new(), remaining),
         };
 
-        let statuses: Vec<&str> = status_line.split('').collect();
+        let statuses: Vec<&str> = status_line.split(' ').collect();
 
         Ok(Self {
             version: statuses[0].to_string(),
             status_code:statuses[1].parse().unwrap_or(404),
-            resason: statuses[2].to_string(),
+            reason: statuses[2].to_string(),
             headers,
             body: body.to_string(),
         })
@@ -101,19 +97,18 @@ impl Header {
     }
 }
 
-#[derive(Debug, Clone, PartialEq,Eq)]
-pub enum Error {
-    Network(String),
-    UnexpectedInput(String),
-    InvalidUI(String),
-    Other(String), 
-}
+// ---
+// ---
+// ---
+// ---
+// ---
+// ---
 
 #[cfg(test)]
 
 mod tests {
     
-    use super::*;,
+    use super::*;
     
     #[test]
     fn test_status_line_only() {
@@ -155,7 +150,7 @@ mod tests {
         assert_eq!(res.status_code(), 200);
         assert_eq!(res.reason(), "OK");
 
-        assert_eq!(res.header_value("Date"), Ok("xx xx xx").to_string());
+        assert_eq!(res.header_value("Date"), Ok("xx xx xx".to_string()));
 
         assert_eq!(res.body(), "body message".to_string());
     }
