@@ -79,7 +79,7 @@ impl HttpClient {
                 break;
             }
 
-            recived.extend_from_slidce(&buf[..bytes_read]);
+            received.extend_from_slice(&buf[..bytes_read]);
         }
 
         match core::str::from_utf8(&received) {
