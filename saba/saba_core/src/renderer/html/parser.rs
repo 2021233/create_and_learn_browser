@@ -225,6 +225,7 @@ impl HtmlParser {
                         Some(HtmlToken::Char(c)) => {
                             if c == ' ' || c == '\n' {
                                 token = self.t.next();
+                                continue;
                             }
                         }
 
@@ -708,4 +709,54 @@ mod tests {
             text
         );
     }
+
+    #[test]
+    fn test_only_head() {
+        let html = "<html><head></head></html>".to_string();
+        let t = HtmlTokenizer::new(html);
+        let window = HtmlParser::new(t).construct_tree();
+        let document = window.borrow().document();
+        let _head = document
+            .borrow()
+            .first_child()
+            .expect("failed to get a first child of document")
+            .borrow()
+            .first_child()
+            .expect("failed to get a first child of html");
+        assert_eq!(
+            Rc::new(RefCell::new(Node::new(NodeKind::Text("text".to_string())))),
+            document
+        );
+    }
 }
+
+// {
+//     value: Node {
+//         kind: Document,
+//         window: (Weak),
+//         parent: (Weak),
+//         first_child: Some(RefCell {
+//             value: Node {
+//                 kind: Element(Element { kind: Html, attributes: [] }),
+//                 window: (Weak),
+//                 parent: (Weak),
+//                 first_child: Some(RefCell {
+//                     value: Node {
+//                         kind: Element(Element { kind: Head, attributes: [] }),
+//                         window: (Weak), parent: (Weak),
+//                         first_child: None,
+//                         last_child: (Weak),
+//                         previous_sibling: (Weak),
+//                         next_sibling: None
+//                     }
+//                 }),
+//                 last_child: (Weak),
+//                 previous_sibling: (Weak),
+//                 next_sibling: None
+//             }
+//         }),
+//         last_child: (Weak),
+//         previous_sibling: (Weak),
+//         next_sibling: None
+//     }
+// };
