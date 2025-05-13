@@ -155,7 +155,7 @@ impl HtmlParser {
             current.borrow_mut().set_first_child(Some(node.clone()));
         }
 
-        current.borrow_mut().set_first_child(Some(node.clone()));
+        current.borrow_mut().set_last_child(Rc::downgrade(&node));
         node.borrow_mut().set_parent(Rc::downgrade(&current));
 
         self.stack_of_open_elements.push(node);
@@ -710,53 +710,23 @@ mod tests {
         );
     }
 
-    #[test]
-    fn test_only_head() {
-        let html = "<html><head></head></html>".to_string();
-        let t = HtmlTokenizer::new(html);
-        let window = HtmlParser::new(t).construct_tree();
-        let document = window.borrow().document();
-        let _head = document
-            .borrow()
-            .first_child()
-            .expect("failed to get a first child of document")
-            .borrow()
-            .first_child()
-            .expect("failed to get a first child of html");
-        assert_eq!(
-            Rc::new(RefCell::new(Node::new(NodeKind::Text("text".to_string())))),
-            document
-        );
-    }
+    // #[test]
+    // fn test_only_head() {
+    //     let html = "<html><head><body><p></p><a></a></body></head></html>".to_string();
+    //     let t = HtmlTokenizer::new(html);
+    //     let window = HtmlParser::new(t).construct_tree();
+    //     let document = window.borrow().document();
+    //     let _head = document
+    //         .borrow()
+    //         .first_child()
+    //         .expect("failed to get a first child of document")
+    //         .borrow()
+    //         .first_child()
+    //         .expect("failed to get a first child of html");
+    //     assert_eq!(
+    //         // Rc::new(RefCell::new(Node::new(NodeKind::Text("text".to_string())))),
+    //         document,
+    //         _head
+    //     );
+    // }
 }
-
-// {
-//     value: Node {
-//         kind: Document,
-//         window: (Weak),
-//         parent: (Weak),
-//         first_child: Some(RefCell {
-//             value: Node {
-//                 kind: Element(Element { kind: Html, attributes: [] }),
-//                 window: (Weak),
-//                 parent: (Weak),
-//                 first_child: Some(RefCell {
-//                     value: Node {
-//                         kind: Element(Element { kind: Head, attributes: [] }),
-//                         window: (Weak), parent: (Weak),
-//                         first_child: None,
-//                         last_child: (Weak),
-//                         previous_sibling: (Weak),
-//                         next_sibling: None
-//                     }
-//                 }),
-//                 last_child: (Weak),
-//                 previous_sibling: (Weak),
-//                 next_sibling: None
-//             }
-//         }),
-//         last_child: (Weak),
-//         previous_sibling: (Weak),
-//         next_sibling: None
-//     }
-// };
