@@ -11,6 +11,26 @@ pub struct CssParser {
 }
 
 impl CssParser {
+    fn consume_component_value(&mut self) -> ComponentValue {
+        self.t
+            .next()
+            .expect("should have a token in consume_component_value")
+    }
+
+    fn consume_ident(&mut self) -> String {
+        let token = match self.next() {
+            Some(t) => t,
+            None => panic!("should have a token but got None"),
+        };
+
+        match token {
+            CssToken::Ident(ref ident) => ident.to_string(),
+            _ => {
+                panic!("Parse error: {:?} is an unexpected token", token);
+            }
+        }
+    }
+
     fn consume_declaration(&mut self) -> Option<Declaration> {
         if self.t.peek().is_none() {
             return None;
@@ -233,3 +253,17 @@ impl Declaration {
 }
 
 pub type ComponentValue = CssToken;
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_empty() {
+        let style = "".to_string();
+        let t = CssTokenizer::new(style);
+        let cssom = CssParser::new(t).parse_stylesheet();
+
+        assert_eq!(cssom.rukes.len(), 0);
+    }
+}
