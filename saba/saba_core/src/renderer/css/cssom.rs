@@ -18,7 +18,7 @@ impl CssParser {
     }
 
     fn consume_ident(&mut self) -> String {
-        let token = match self.next() {
+        let token = match self.t.next() {
             Some(t) => t,
             None => panic!("should have a token but got None"),
         };
@@ -144,7 +144,7 @@ impl CssParser {
                 }
 
                 _ => {
-                    rule.set_selector(self.consume_selecotr());
+                    rule.set_selector(self.consume_selector());
                 }
             }
         }
@@ -219,6 +219,10 @@ impl QualifiedRule {
     pub fn set_selector(&mut self, selector: Selector) {
         self.selector = selector;
     }
+
+    pub fn set_declarations(&mut self, declarations: Vec<Declaration>) {
+        self.declarations = declarations;
+    }
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -229,7 +233,7 @@ pub enum Selector {
     UnknownSelector,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct Declaration {
     pub property: String,
     pub value: ComponentValue,
