@@ -269,7 +269,7 @@ mod tests {
         let t = CssTokenizer::new(style);
         let cssom = CssParser::new(t).parse_stylesheet();
 
-        assert_eq!(cssom.rukes.len(), 0);
+        assert_eq!(cssom.rules.len(), 0);
     }
 
     #[test]
@@ -281,6 +281,7 @@ mod tests {
         let mut rule = QualifiedRule::new();
         rule.set_selector(Selector::TypeSelector("p".to_string()));
         let mut declaration = Declaration::new();
+        declaration.set_property("color".to_string());
         declaration.set_value(ComponentValue::Ident("red".to_string()));
         rule.set_declarations(vec![declaration]);
 
@@ -312,7 +313,7 @@ mod tests {
 
         let mut i = 0;
         for rule in &cssom.rules {
-            asser_eq!(&expected[i], rule);
+            assert_eq!(&expected[i], rule);
             i += 1;
         }
     }
@@ -347,7 +348,7 @@ mod tests {
         let cssom = CssParser::new(t).parse_stylesheet();
 
         let mut rule1 = QualifiedRule::new();
-        rule.set_selector(Selector::TypeSelector("p".to_string()));
+        rule1.set_selector(Selector::TypeSelector("p".to_string()));
         let mut declaration1 = Declaration::new();
         declaration1.set_property("content".to_string());
         declaration1.set_value(ComponentValue::StringToken("Hey".to_string()));
@@ -356,5 +357,21 @@ mod tests {
         let mut rule2 = QualifiedRule::new();
         rule2.set_selector(Selector::TypeSelector("h1".to_string()));
         let mut declaration2 = Declaration::new();
+        declaration2.set_property("font-size".to_string());
+        declaration2.set_value(ComponentValue::Number(40.0));
+        let mut declaration3 = Declaration::new();
+        declaration3.set_property("color".to_string());
+        declaration3.set_value(ComponentValue::Ident("blue".to_string()));
+        rule2.set_declarations(vec![declaration2, declaration3]);
+
+        let expected = [rule1, rule2];
+        assert_eq!(cssom.rules.len(), expected.len());
+
+        let mut i = 0;
+
+        for rule in &cssom.rules {
+            assert_eq!(&expected[i], rule);
+            i += 1;
+        }
     }
 }
