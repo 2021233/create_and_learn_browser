@@ -164,4 +164,137 @@ impl Color {
             code: code.to_string(),
         })
     }
+
+    pub fn white() -> Self {
+        Self {
+            name: Some("white".to_string()),
+            code: "#ffffff".to_string(),
+        }
+    }
+
+    pub fn black() -> Self {
+        Self {
+            name: Some("black".to_string()),
+            code: "#000000".to_string(),
+        }
+    }
+
+    pub fn silver() -> Self {
+        Self {
+            name: Some("silver".to_string()),
+            code: "#c0c0c0".to_string(),
+        }
+    }
+
+    pub fn gray() -> Self {
+        Self {
+            name: Some("gray".to_string()),
+            code: "#808080".to_string(),
+        }
+    }
+
+    pub fn white() -> Self {
+        Self {
+            name: Some("white".to_string()),
+            code: "#ffffff".to_string(),
+        }
+    }
+
+    pub fn marron() -> Self {
+        Self {
+            name: Some("marron".to_string()),
+            code: "#800000".to_string(),
+        }
+    }
+
+    pub fn red() -> Self {
+        Self {
+            name: Some("red".to_string()),
+            code: "#ff0000".to_string(),
+        }
+    }
+
+    pub fn purple() -> Self {
+        Self {
+            name: Some("purple".to_string()),
+            code: "#800080".to_string(),
+        }
+    }
+
+    pub fn fuchsia() -> Self {
+        Self {
+            name: Some("fuchsia".to_string()),
+            code: "#ff00ff".to_string(),
+        }
+    }
+
+    pub fn green() -> Self {
+        Self {
+            name: Some("green".to_string()),
+            code: "#008000".to_string(),
+        }
+    }
+
+    pub fn lime() -> Self {
+        Self {
+            name: Some("lime".to_string()),
+            code: "#00ff00".to_string(),
+        }
+    }
+
+    pub fn olive() -> Self {
+        Self {
+            name: Some("olive".to_string()),
+            code: "#808000".to_string(),
+        }
+    }
+
+    pub fn yellow() -> Self {
+        Self {
+            name: Some("yellow".to_string()),
+            code: "#ffff00".to_string(),
+        }
+    }
+
+    pub fn navy() -> Self {
+        Self {
+            name: Some("navy".to_string()),
+            code: "#000080".to_string(),
+        }
+    }
+
+    pub fn blue() -> Self {
+        Self {
+            name: Some("blue".to_string()),
+            code: "#0000ff".to_string(),
+        }
+    }
+
+    pub fn teal() -> Self {
+        Self {
+            name: Some("teal".to_string()),
+            code: "#008080".to_string(),
+        }
+    }
+
+    pub fn aqua() -> Self {
+        Self {
+            name: Some("aqua".to_string()),
+            code: "#00ffff".to_string(),
+        }
+    }
+
+    pub fn orange() -> Self {
+        Self {
+            name: Some("orange".to_string()),
+            code: "#ffa500".to_string(),
+        }
+    }
+
+    pub fn lightgray() -> Self {
+        Self {
+            name: Some("lightgray".to_string()),
+            code: "#d3d3d3".to_string(),
+        }
+    }
 }
