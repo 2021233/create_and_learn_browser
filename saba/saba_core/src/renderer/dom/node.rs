@@ -5,9 +5,9 @@ use alloc::rc::Weak;
 use alloc::string::String;
 use alloc::vec::Vec;
 use core::cell::RefCell;
-use core::str::FromStr;
 use core::fmt::Display;
 use core::fmt::Formatter;
+use core::str::FromStr;
 
 #[derive(Debug, Clone)]
 pub struct Node {
@@ -153,6 +153,13 @@ pub struct Element {
 }
 
 impl Element {
+    pub fn is_block_element(&self) -> bool {
+        match self.kind {
+            ElementKind::Body | ElementKind::H1 | ElementKind::H2 | ElementKind::P => true,
+            _ => false,
+        }
+    }
+
     pub fn new(element_name: &str, attributes: Vec<Attribute>) -> Self {
         Self {
             kind: ElementKind::from_str(element_name)
