@@ -198,13 +198,6 @@ impl Color {
         }
     }
 
-    pub fn white() -> Self {
-        Self {
-            name: Some("white".to_string()),
-            code: "#ffffff".to_string(),
-        }
-    }
-
     pub fn marron() -> Self {
         Self {
             name: Some("marron".to_string()),
@@ -358,6 +351,25 @@ impl DisplayType {
                 "display {:?} is not supported yet",
                 s
             ))),
+        }
+    }
+}
+
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub enum TextDecoration {
+    None,
+    Underline,
+}
+
+impl TextDecoration {
+    fn defalut(node: &Rc<RefCell<Node>>) -> Self {
+        match &node.borrow().kind() {
+            NodeKind::Element(element) => match element.kind() {
+                ElementKind::A => TextDecoration::Underline,
+                _ => TextDecoration::None,
+            },
+
+            _ => TextDecoration::None,
         }
     }
 }
