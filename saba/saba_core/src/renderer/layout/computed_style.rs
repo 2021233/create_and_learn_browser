@@ -1,7 +1,12 @@
 use crate::error::Error;
+use crate::renderer::dom::node::ElementKind;
+use crate::renderer::dom::node::Node;
+use crate::renderer::dom::node::NodeKind;
 use alloc::format;
+use alloc::rc::Rc;
 use alloc::string::String;
 use alloc::string::ToString;
+use core::cell::RefCell;
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct ComputedStyle {
@@ -298,3 +303,25 @@ impl Color {
         }
     }
 }
+
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub enum FontSize {
+    Medium,
+    XLarge,
+    XXLarge,
+}
+
+impl FontSize {
+    fn default(node: &Rc<RefCell<Node>>) -> Self {
+        match &node.borrow().kind() {
+            NodeKind::Element(element) => match element.kind() {
+                ElementKind::H1 => FontSize::XXLarge,
+                ElementKind::H2 => FontSize::XLarge,
+                _ => FontSize::Medium,
+            },
+
+            _ => FontSize::Medium,
+        }
+    }
+}
+
