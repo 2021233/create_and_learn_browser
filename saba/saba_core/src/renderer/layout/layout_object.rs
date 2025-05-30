@@ -1,6 +1,10 @@
+use crate::alloc::string::ToString;
+use crate::renderer::css::cssom::Selector;
+use crate::renderer::css::cssom::StyleSheet;
 use crate::renderer::dom::node::Node;
 use crate::renderer::dom::node::NodeKind;
 use crate::renderer::layout::computed_style::ComputedStyle;
+use crate::renderer::layout::computed_style::DisplayType;
 use alloc::rc::Rc;
 use alloc::rc::Weak;
 use core::cell::RefCell;
@@ -18,6 +22,41 @@ pub struct LayoutObject {
 }
 
 impl LayoutObject {
+    pub fn is_node_selected(&self, selector: &Selector) -> bool {
+        match &self.node_kind() {
+            NodeKind::Element(e) => match selector {
+                Selector::TypeSelector(type_name) => {
+                    if e.kind().to_string() == *type_name {
+                        return true;
+                    }
+                    false
+                }
+
+                Selector::ClassSelector(class_name) => {
+                    for attr in &e.attributes() {
+                        if attr.name() == "class" && attr.value() == *class_name {
+                            return true;
+                        }
+                    }
+                    false
+                }
+
+                Selector::IdSelector(id_name) => {
+                    for attr in &e.attributes() {
+                        if attr.name() == "id" && attr.value() == *id_name {
+                            return true;
+                        }
+                    }
+                    false
+                }
+
+                Selector::UnknownSelector => false,
+            },
+
+            _ => false,
+        }
+    }
+
     pub fn kind(&self) -> LayoutObjectKind {
         self.kind
     }
@@ -134,4 +173,39 @@ impl LayoutSize {
     pub fn set_height(&mut self, height: i64) {
         self.height = height;
     }
+}
+
+pub fn create_layout_object(
+    node: &Option<Rc<RefCell<Node>>>,
+    parent_obj: &Option<Rc<RefCell<LayoutObject>>>,
+    cssom: &StyleSheet,
+) -> Option<Rc<RefCell<LayoutObject>>> {
+    if let Some(n) = node {
+        let layout_object = Rc::new(RefCell::new(LayoutObject::new(n.clone(), parent_obj)));
+
+        for rule in &cssom.rules {
+            if layout_object.borrow().is_node_selected(&rule.selector) {
+                layout_object
+                    .borrow_mut()
+                    .cascading_style(rule.declarations.clone());
+            }
+        }
+
+        let parent_style = if let Some(parent) = parent_obj {
+            Some(parent.borrow().style())
+        } else {
+            None
+        };
+
+        layout_object.borrow_mut().defaulting_style(n, parent_style);
+
+        if layout_object.borrow().style().display() == DisplayType::DisplayNone {
+            return None;
+        }
+
+        layout_object.borrow_mut().update_kind();
+        return Some(layout_object);
+    }
+
+    None
 }
