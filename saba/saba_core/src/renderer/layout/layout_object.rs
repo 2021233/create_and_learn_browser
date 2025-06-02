@@ -26,6 +26,25 @@ pub struct LayoutObject {
 }
 
 impl LayoutObject {
+    pub fn update_kind(&mut self) {
+        match self.node_kind() {
+            NodeKind::Document => panic!("should not create a layout object for a Document node"),
+
+            NodeKind::Element(_) => {
+                let display = self.style.display();
+                match display {
+                    DisplayType::Block => self.kind = LayoutObjectKind::Block,
+                    DisplayType::Inline => self.kind = LayoutObjectKind::Inline,
+                    DisplayType::DisplayNone => {
+                        panic!("should not create a layout object for display:none")
+                    }
+                }
+            }
+
+            NodeKind::Text(_) => self.kind = LayoutObjectKind::Text,
+        }
+    }
+
     pub fn defaulting_style(
         &mut self,
         node: &Rc<RefCell<Node>>,
