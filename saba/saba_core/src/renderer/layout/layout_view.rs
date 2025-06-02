@@ -1,9 +1,12 @@
+use crate::constants::CONTENT_AREA_WIDTH;
 use crate::renderer::css::cssom::StyleSheet;
 use crate::renderer::dom::api::get_target_element_node;
 use crate::renderer::dom::node::ElementKind;
 use crate::renderer::dom::node::Node;
 use crate::renderer::layout::layout_object::create_layout_object;
 use crate::renderer::layout::layout_object::LayoutObject;
+use crate::renderer::layout::layout_object::LayoutPoint;
+use crate::renderer::layout::layout_object::LayoutSize;
 use alloc::rc::Rc;
 use core::cell::RefCell;
 
@@ -27,6 +30,18 @@ impl LayoutView {
 
     pub fn root(&self) -> Option<Rc<RefCell<LayoutObject>>> {
         self.root.clone()
+    }
+
+    pub fn update_layout(&mut self) {
+        Self::calculate_node_size(&self.root, LayoutSize::new(CONTENT_AREA_WIDTH, 0));
+
+        Self::calculate_node_position(
+            &self.root,
+            LayoutPoint::new(0, 0),
+            LayoutObjectKind::Block,
+            None,
+            None,
+        );
     }
 }
 
