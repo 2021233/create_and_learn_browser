@@ -1,4 +1,7 @@
 use crate::alloc::string::ToString;
+use crate::constants::CHAR_HEIGHT_WITH_PADDING;
+use crate::constants::CHAR_WIDTH;
+use crate::constants::CONTENT_AREA_WIDTH;
 use crate::renderer::css::cssom::ComponentValue;
 use crate::renderer::css::cssom::Declaration;
 use crate::renderer::css::cssom::Selector;
@@ -8,6 +11,7 @@ use crate::renderer::dom::node::NodeKind;
 use crate::renderer::layout::computed_style::Color;
 use crate::renderer::layout::computed_style::ComputedStyle;
 use crate::renderer::layout::computed_style::DisplayType;
+use crate::renderer::layout::computed_style::FontSize;
 use alloc::rc::Rc;
 use alloc::rc::Weak;
 use alloc::vec::Vec;
@@ -26,6 +30,58 @@ pub struct LayoutObject {
 }
 
 impl LayoutObject {
+    pub fn compute_size(&mut self, parent_size: LayoutSize) {
+        let mut size = LayoutSize::new(0, 0);
+
+        match self.kind() {
+            LayoutObjectKind::Block => {
+                size.set_width(parent_size.width());
+
+                let mut height = 0;
+                let mut child = self.first_child();
+                let mut previous_shild_kind = LayoutObjectKind::Block;
+                while child.is_some() {
+                    let c = match child {
+                        Some(c) => c,
+                        None => panic!("first child should exist"),
+                    };
+
+                    if previous_shild_kind == LayoutObjectKind::Block
+                        || c.borrow().kind() == LayoutObjectKind::Block
+                    {
+                        height += c.borrow().size.height();
+                        previous_shild_kind = c.borrow().kind();
+                        child = c.borrow().next_sibling();
+                    }
+                }
+
+                size.set_height(height);
+            }
+
+            LayoutObjectKind::Inline => {
+                let mut width = 0;
+                let mut height = 0;
+                let mut child = self.first_child();
+                while child.is_some() {
+                    let c = match child {
+                        Some(c) => c,
+                        None => panic!("first child should exist"),
+                    };
+
+                    width += c.borrow().size.width();
+                    height += c.borrow().size.height();
+                    child = c.borrow().next_sibling();
+                }
+
+                size.set_width(width);
+                size.set_height(height);
+            }
+
+            LayoutObjectKind::Text => {
+            }
+        }
+    }
+
     pub fn update_kind(&mut self) {
         match self.node_kind() {
             NodeKind::Document => panic!("should not create a layout object for a Document node"),
@@ -166,8 +222,12 @@ impl LayoutObject {
         self.first_child.as_ref().cloned()
     }
 
-    pub fn set_next_sibling(&self) -> Option<Rc<RefCell<LayoutObject>>> {
-        self.next_sibling.as_ref().cloned()
+    pub fn set_next_sibling(&mut self, next_sibling: Option<Rc<RefCell<LayoutObject>>>) {
+        self.next_sibling = next_sibling;
+    }
+
+    pub fn next_sibling(&self) -> Option<Rc<RefCell<LayoutObject>>> {
+        self.first_child.as_ref().cloned()
     }
 
     pub fn parent(&self) -> Weak<RefCell<Self>> {

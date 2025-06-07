@@ -5,6 +5,7 @@ use crate::renderer::dom::node::ElementKind;
 use crate::renderer::dom::node::Node;
 use crate::renderer::layout::layout_object::create_layout_object;
 use crate::renderer::layout::layout_object::LayoutObject;
+use crate::renderer::layout::layout_object::LayoutObjectKind;
 use crate::renderer::layout::layout_object::LayoutPoint;
 use crate::renderer::layout::layout_object::LayoutSize;
 use alloc::rc::Rc;
@@ -42,6 +43,22 @@ impl LayoutView {
             None,
             None,
         );
+    }
+
+    fn calculate_node_size(node: &Option<Rc<RefCell<LayoutObject>>>, parent_size: LayoutSize) {
+        if let Some(n) = node {
+            if n.borrow().kind() == LayoutObjectKind::Block {
+                n.borrow_mut().compute_size(parent_size);
+            }
+
+            let first_child = n.borrow().first_child();
+            Self::calculate_node_size(&first_child, n.borrow().size());
+
+            let next_sibling = n.borrow().next_sibling();
+            Self::calculate_node_size(&next_sibling, parent_size);
+
+            n.borrow_mut().compute_size(parent_size);
+        }
     }
 }
 
