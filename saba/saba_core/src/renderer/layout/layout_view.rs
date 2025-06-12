@@ -160,7 +160,7 @@ fn build_layout_tree(
             }
         }
 
-        let &obj = match layout_object {
+        let obj = match layout_object {
             Some(ref obj) => obj,
             None => panic!("render object should exist here"),
         };
