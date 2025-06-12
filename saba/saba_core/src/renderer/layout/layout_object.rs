@@ -85,9 +85,9 @@ impl LayoutObject {
                         || c.borrow().kind() == LayoutObjectKind::Block
                     {
                         height += c.borrow().size.height();
-                        previous_shild_kind = c.borrow().kind();
-                        child = c.borrow().next_sibling();
                     }
+                    previous_shild_kind = c.borrow().kind();
+                    child = c.borrow().next_sibling();
                 }
 
                 size.set_height(height);
@@ -306,7 +306,7 @@ impl LayoutObject {
     pub fn new(node: Rc<RefCell<Node>>, parent_obj: &Option<Rc<RefCell<LayoutObject>>>) -> Self {
         let parent = match parent_obj {
             Some(p) => Rc::downgrade(p),
-            Node => Weak::new(),
+            None => Weak::new(),
         };
 
         Self {
