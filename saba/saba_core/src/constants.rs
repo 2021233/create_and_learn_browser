@@ -1,7 +1,7 @@
 pub static WHITE: u32 = 0xffffff;
-pub static LIGHTGRAY: u32 = 0xd3d3d3;
-pub static GRAY: u32 = 0x808080;
-pub static DARKGRAY: u32 = 0x5a5a5a;
+pub static LIGHTGREY: u32 = 0xd3d3d3;
+pub static GREY: u32 = 0x808080;
+pub static DARKGREY: u32 = 0x5a5a5a;
 pub static BLACK: u32 = 0x000000;
 
 pub static ADDRESSBAR_HEIGHT: i64 = 20;
