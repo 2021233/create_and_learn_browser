@@ -6,7 +6,7 @@ pub static BLACK: u32 = 0x000000;
 
 pub static ADDRESSBAR_HEIGHT: i64 = 20;
 
-pub static WINDOW_INHT_X_POS: i64 = 30;
+pub static WINDOW_INIT_X_POS: i64 = 30;
 pub static WINDOW_INIT_Y_POS: i64 = 50;
 
 pub static WINDOW_WIDTH: i64 = 600;

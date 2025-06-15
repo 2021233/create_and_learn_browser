@@ -1,24 +1,36 @@
 use crate::alloc::string::ToString;
+use alloc::format;
 use alloc::rc::Rc;
 use core::cell::RefCell;
 use noli::error::Result as OsResult;
+use noli::window::StringSize;
 use noli::window::Window;
-use noli::windows::StringSize;
 use saba_core::browser::Browser;
-use saba_core::constants::WINDOW_INIt_X_POS;
-use saba_core::constants::WHITE;
-use saba_core::constants::WINDOW_HEIGHT;
-use saba_core::constants::WINDOW_INIT_Y_POS;
-use saba_core::constants::WINDOW_WIDTH;
 use saba_core::constants::*;
+use saba_core::error::Error;
 
 #[derive(Debug)]
 pub struct WasabiUI {
     browser: Rc<RefCell<Browser>>,
-    window: Winsow,
+    window: Window,
 }
 
 impl WasabiUI {
+    pub fn new(browser: Rc<RefCell<Browser>>) -> Self {
+        Self {
+            browser,
+            window: Window::new(
+                "saba".to_string(),
+                WHITE,
+                WINDOW_INIT_X_POS,
+                WINDOW_INIT_Y_POS,
+                WINDOW_WIDTH,
+                WINDOW_HEIGHT,
+            )
+            .unwrap(),
+        }
+    }
+
     pub fn start(&mut self) -> Result<(), Error> {
         self.setup()?;
 
@@ -43,7 +55,7 @@ impl WasabiUI {
         Ok(())
     }
 
-    fn setup_toolbar(&mut self) -> OsResult {
+    fn setup_toolbar(&mut self) -> OsResult<()> {
         self.window
             .fill_rect(LIGHTGREY, 0, 0, WINDOW_WIDTH, TOOLBAR_HEIGHT)?;
 
