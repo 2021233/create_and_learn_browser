@@ -1,4 +1,5 @@
 use crate::alloc::string::ToString;
+use crate::cursor::Cursor;
 use alloc::format;
 use alloc::rc::Rc;
 use alloc::string::String;
@@ -14,6 +15,7 @@ use noli::window::Window;
 use saba_core::browser::Browser;
 use saba_core::constants::*;
 use saba_core::error::Error;
+use saba_core::http::HttpResponse;
 
 #[derive(Debug)]
 pub struct WasabiUI {
@@ -21,6 +23,7 @@ pub struct WasabiUI {
     input_url: String,
     input_mode: InputMode,
     window: Window,
+    cursor: Cursor,
 }
 
 impl WasabiUI {
@@ -38,21 +41,28 @@ impl WasabiUI {
                 WINDOW_HEIGHT,
             )
             .unwrap(),
+            cursor: Cursor::new(),
         }
     }
 
-    pub fn start(&mut self) -> Result<(), Error> {
+    pub fn start(
+        &mut self,
+        handle_url: fn(String) -> Result<HttpResponse, Error>,
+    ) -> Result<(), Error> {
         self.setup()?;
 
-        self.run_app()?;
+        self.run_app(handle_url)?;
 
         Ok(())
     }
 
-    fn run_app(&mut self) -> Result<(), Error> {
+    fn run_app(
+        &mut self,
+        handle_url: fn(String) -> Result<HttpResponse, Error>,
+    ) -> Result<(), Error> {
         loop {
             self.handle_mouse_input()?;
-            self.handle_key_input()?;
+            self.handle_key_input(handle_url)?;
         }
         // Ok(())
     }
@@ -69,7 +79,30 @@ impl WasabiUI {
         Ok(())
     }
 
-    fn handle_key_input(&mut self) -> Result<(), Error> {
+    fn start_navigation(
+        &mut self,
+        handle_url: fn(String) -> Result<HttpResponse, Error>,
+        destination: String,
+    ) -> Result<(), Error> {
+        // self.clear_content_area()?;
+        match handle_url(destination) {
+            Ok(response) => {
+                let page = self.browser.borrow().current_page();
+                page.borrow_mut().receive_response(response);
+            }
+
+            Err(e) => {
+                return Err(e);
+            }
+        }
+
+        Ok(())
+    }
+
+    fn handle_key_input(
+        &mut self,
+        handle_url: fn(String) -> Result<HttpResponse, Error>,
+    ) -> Result<(), Error> {
         match self.input_mode {
             InputMode::Normal => {
                 let _ = Api::read_key();
@@ -77,7 +110,12 @@ impl WasabiUI {
 
             InputMode::Editing => {
                 if let Some(c) = Api::read_key() {
-                    if c == 0x7F as char || c == 0x08 as char {
+                    if c == 0x0A as char {
+                        self.start_navigation(handle_url, self.input_url.clone())?;
+
+                        self.input_url = String::new();
+                        self.input_mode = InputMode::Normal;
+                    } else if c == 0x7F as char || c == 0x08 as char {
                         self.input_url.pop();
                         self.update_address_bar()?;
                     } else {
@@ -93,6 +131,11 @@ impl WasabiUI {
 
     fn handle_mouse_input(&mut self) -> Result<(), Error> {
         if let Some(MouseEvent { button, position }) = Api::get_mouse_cursor_info() {
+            self.window.flush_area(self.cursor.rect());
+            self.cursor.set_position(position.x, position.y);
+            self.window.flush_area(self.cursor.rect());
+            self.cursor.flush();
+
             if button.l() || button.c() || button.r() {
                 let relative_pos = (
                     position.x - WINDOW_INIT_X_POS,
@@ -209,6 +252,28 @@ impl WasabiUI {
             )
             .expect("failed to create a rect for the adress bar"),
         );
+
+        Ok(())
+    }
+
+    fn clear_content_area(&mut self) -> Result<(), Error> {
+        if self
+            .window
+            .fill_rect(
+                WHITE,
+                0,
+                TOOLBAR_HEIGHT + 2,
+                CONTENT_AREA_WIDTH,
+                CONTENT_AREA_HEIGHT - 2,
+            )
+            .is_err()
+        {
+            return Err(Error::InvalidUI(
+                "failed to clear a content area".to_string(),
+            ));
+        }
+
+        self.window.flush();
 
         Ok(())
     }
