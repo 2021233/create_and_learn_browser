@@ -64,7 +64,6 @@ impl WasabiUI {
             self.handle_mouse_input()?;
             self.handle_key_input(handle_url)?;
         }
-        // Ok(())
     }
 
     fn setup(&mut self) -> Result<(), Error> {
@@ -84,7 +83,7 @@ impl WasabiUI {
         handle_url: fn(String) -> Result<HttpResponse, Error>,
         destination: String,
     ) -> Result<(), Error> {
-        // self.clear_content_area()?;
+        self.clear_content_area()?;
         match handle_url(destination) {
             Ok(response) => {
                 let page = self.browser.borrow().current_page();
@@ -268,6 +267,7 @@ impl WasabiUI {
             )
             .is_err()
         {
+            println!("clear content area failed");
             return Err(Error::InvalidUI(
                 "failed to clear a content area".to_string(),
             ));
