@@ -1,0 +1,487 @@
+LayoutView {
+  root: Some(
+    RefCell {
+      value: LayoutObject {
+      kind: Block,
+      node: RefCell {
+      value: Node {
+      kind: Element(
+      Element {
+      kind: Body,
+      attributes: [
+
+]
+      }
+      ),
+      window: (
+      Weak
+      ),
+      parent: (
+      Weak
+      ),
+      first_child: Some(
+      RefCell {
+      value: Node {
+      kind: Element(
+      Element {
+      kind: H1,
+      attributes: [
+
+]
+      }
+      ),
+      window: (
+      Weak
+      ),
+      parent: (
+      Weak
+      ),
+      first_child: Some(
+      RefCell {
+      value: Node {
+      kind: Text(
+      "Test Page"
+      ),
+      window: (
+      Weak
+      ),
+      parent: (
+      Weak
+      ),
+      first_child: None,
+      last_child: (
+      Weak
+      ),
+      previous_sibling: (
+      Weak
+      ),
+      next_sibling: None
+      }
+      }
+      ),
+      last_child: (
+      Weak
+      ),
+      previous_sibling: (
+      Weak
+      ),
+      next_sibling: Some(
+      RefCell {
+      value: Node {
+      kind: Element(
+      Element {
+      kind: P,
+      attributes: [
+Attribute {
+      name: "class",
+      value: "red"
+      }
+]
+      }
+      ),
+      window: (
+      Weak
+      ),
+      parent: (
+      Weak
+      ),
+      first_child: Some(
+      RefCell {
+      value: Node {
+      kind: Text(
+      "this is a test page with red backgound color."
+      ),
+      window: (
+      Weak
+      ),
+      parent: (
+      Weak
+      ),
+      first_child: None,
+      last_child: (
+      Weak
+      ),
+      previous_sibling: (
+      Weak
+      ),
+      next_sibling: None
+      }
+      }
+      ),
+      last_child: (
+      Weak
+      ),
+      previous_sibling: (
+      Weak
+      ),
+      next_sibling: None
+      }
+      }
+      )
+      }
+      }
+      ),
+      last_child: (
+      Weak
+      ),
+      previous_sibling: (
+      Weak
+      ),
+      next_sibling: None
+      }
+      },
+        first_child: Some(
+          RefCell {
+            value: LayoutObject {
+              kind: Block,
+              node: RefCell {
+                value: Node {
+                  kind: Element(
+                    Element {
+                      kind: H1,
+                      attributes: [
+
+]
+                    }
+                  ),
+                  window: (Weak),
+                  parent: (Weak),
+                  first_child: Some(
+                    RefCell {
+                      value: Node {
+                      kind: Text("Test Page"),
+                      window: (Weak),
+                      parent: (Weak),
+                      first_child: None,
+                      last_child: (Weak),
+                      previous_sibling: (Weak),
+                      next_sibling: None
+                      }
+                    }
+                  ),
+                  last_child: (Weak),
+                  previous_sibling: (Weak),
+                  next_sibling: Some(
+                    RefCell {
+                      value: Node {
+                        kind: Element(
+                          Element {
+                            kind: P,
+                            attributes: [
+                              Attribute {
+                                name: "class",
+                                value: "red"
+                              }
+                            ]
+                          }
+                        ),
+                        window: (Weak),
+                        parent: (Weak),
+                        first_child: Some(
+                          RefCell {
+                            value: Node {
+                              kind: Text("this is a test page with red backgound color."),
+                              window: (Weak),
+                              parent: (Weak),
+                              first_child: None,
+                              last_child: (Weak),
+                              previous_sibling: (Weak),
+                              next_sibling: None
+                            }
+                          }
+                        ),
+                        last_child: (Weak),
+                        previous_sibling: (Weak),
+                        next_sibling: None
+                      }
+                    }
+                  )
+                }
+              },
+              first_child: Some(
+                RefCell {
+                  value: LayoutObject {
+                    kind: Text,
+                    node: RefCell {
+                      value: Node {
+                        kind: Text("Test Page"),
+                        window: (Weak),
+                        parent: (Weak),
+                        first_child: None,
+                        last_child: (Weak),
+                        previous_sibling: (Weak),
+                        next_sibling: None
+                      }
+                    },
+                    first_child: None,
+                    next_sibling: None,
+                    parent: (Weak),
+                    style: ComputedStyle {
+                      background_color: Some(
+                        Color {
+                          name: Some("white"),
+                          code: "#ffffff"
+                        }
+                      ),
+                      color: Some(
+                        Color {
+                          name: Some("orange"),
+                          code: "#ffa500"
+                        }
+                      ),
+                      display: Some(Inline),
+                      font_size: Some(XXLarge),
+                      text_decoration: Some(None),
+                      height: Some(0.0),
+                      width: Some(0.0)
+                    },
+                    point: LayoutPoint {
+                      x: 0,
+                      y: 0
+                    },
+                    size: LayoutSize {
+                      width: 216,
+                      height: 60
+                    }
+                  }
+                }
+              ),
+              next_sibling: Some(
+                RefCell {
+                  value: LayoutObject {
+                    kind: Block,
+                    node: RefCell {
+                      value: Node {
+                        kind: Element(
+                          Element {
+                            kind: P,
+                            attributes: [
+                              Attribute {
+                                name: "class",
+                                value: "red"
+                              }
+                            ]
+                          }
+                        ),
+                        window: (Weak),
+                        parent: (Weak),
+                        first_child: Some(
+                          RefCell {
+                            value: Node {
+                              kind: Text("this is a test page with red backgound color."),
+                              window: (Weak),
+                              parent: (Weak),
+                              first_child: None,
+                              last_child: (Weak),
+                              previous_sibling: (Weak),
+                              next_sibling: None
+                            }
+                          }
+                        ),
+                        last_child: (Weak),
+                        previous_sibling: (Weak),
+                        next_sibling: None
+                      }
+                    },
+                    first_child: Some(
+                    RefCell {
+                    value: LayoutObject {
+                    kind: Text,
+                    node: RefCell {
+                    value: Node {
+                    kind: Text(
+                    "this is a test page with red backgound color."
+                    ),
+                    window: (
+                    Weak
+                    ),
+                    parent: (
+                    Weak
+                    ),
+                    first_child: None,
+                    last_child: (
+                    Weak
+                    ),
+                    previous_sibling: (
+                    Weak
+                    ),
+                    next_sibling: None
+                    }
+                    },
+                    first_child: None,
+                    next_sibling: None,
+                    parent: (
+                    Weak
+                    ),
+                    style: ComputedStyle {
+                    background_color: Some(
+                    Color {
+                    name: Some(
+                    "red"
+                    ),
+                    code: "#ff0000"
+                    }
+                    ),
+                    color: Some(
+                    Color {
+                    name: Some(
+                    "black"
+                    ),
+                    code: "#000000"
+                    }
+                    ),
+                    display: Some(
+                    Inline
+                    ),
+                    font_size: Some(
+                    Medium
+                    ),
+                    text_decoration: Some(
+                    None
+                    ),
+                    height: Some(
+                    0.0
+                    ),
+                    width: Some(
+                    0.0
+                    )
+                    },
+                    point: LayoutPoint {
+                    x: 0,
+                    y: 0
+                    },
+                    size: LayoutSize {
+                    width: 0,
+                    height: 0
+                    }
+                    }
+                    }
+                    ),
+                  next_sibling: None,
+                  parent: (
+                  Weak
+                  ),
+                  style: ComputedStyle {
+                  background_color: Some(
+                  Color {
+                  name: Some(
+                  "red"
+                  ),
+                  code: "#ff0000"
+                  }
+                  ),
+                  color: Some(
+                  Color {
+                  name: Some(
+                  "black"
+                  ),
+                  code: "#000000"
+                  }
+                  ),
+                  display: Some(
+                  Block
+                  ),
+                  font_size: Some(
+                  Medium
+                  ),
+                  text_decoration: Some(
+                  None
+                  ),
+                  height: Some(
+                  0.0
+                  ),
+                  width: Some(
+                  0.0
+                  )
+                  },
+                  point: LayoutPoint {
+                  x: 0,
+                  y: 0
+                  },
+                  size: LayoutSize {
+                  width: 0,
+                  height: 0
+                  }
+                  }
+                }
+              ),
+            parent: (
+            Weak
+            ),
+            style: ComputedStyle {
+            background_color: Some(
+            Color {
+            name: Some(
+            "white"
+            ),
+            code: "#ffffff"
+            }
+            ),
+            color: Some(
+            Color {
+            name: Some(
+            "orange"
+            ),
+            code: "#ffa500"
+            }
+            ),
+            display: Some(
+            Block
+            ),
+            font_size: Some(
+            XXLarge
+            ),
+            text_decoration: Some(
+            None
+            ),
+            height: Some(
+            0.0
+            ),
+            width: Some(
+            0.0
+            )
+            },
+            point: LayoutPoint {
+            x: 0,
+            y: 0
+            },
+            size: LayoutSize {
+            width: 590,
+            height: 60
+            }
+            }
+          }
+        ),
+        next_sibling: None,
+        parent: (Weak),
+        style: ComputedStyle {
+          background_color: Some(
+            Color {
+              name: Some("white"),
+              code: "#ffffff"
+            }
+          ),
+          color: Some(
+            Color {
+              name: Some("black"),
+              code: "#000000"
+            }
+          ),
+          display: Some(Block),
+          font_size: Some(Medium),
+          text_decoration: Some(None),
+          height: Some(0.0),
+          width: Some(0.0)
+        },
+        point: LayoutPoint {
+          x: 0,
+          y: 0
+        },
+        size: LayoutSize {
+          width: 590,
+          height: 120
+        }
+      }
+    }
+  )
+}

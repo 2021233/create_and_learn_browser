@@ -209,21 +209,14 @@ impl WasabiUI {
             .current_page()
             .borrow()
             .display_items();
-        let mut cnt = 1;
-
-        println!("display_items len: {}", display_items.len());
 
         for item in display_items {
-            println!("{}", cnt);
-            cnt = cnt + 1;
-
             match item {
                 DisplayItem::Text {
                     text,
                     style,
                     layout_point,
                 } => {
-                    println!("{}", text);
                     if self
                         .window
                         .draw_string(

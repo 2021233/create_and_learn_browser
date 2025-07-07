@@ -1,0 +1,161 @@
+RefCell {
+  value: Node {
+    kind: Document,
+    window: (Weak),
+    parent: (Weak),
+    first_child: Some(
+      RefCell {
+        value: Node {
+        kind: Element(
+          Element {
+            kind: Html,
+            attributes: []
+          }
+        ),
+        window: (Weak),
+        parent: (Weak),
+        first_child: Some(
+          RefCell {
+          value: Node {
+          kind: Element(
+            Element {
+              kind: Head,
+              attributes: []
+            }
+          ),
+          window: (Weak),
+          parent: (Weak),
+          first_child: Some(
+            RefCell {
+              value: Node {
+              kind: Element(
+                Element {
+                  kind: Style,
+                  attributes: [
+                    Attribute {
+                      name: "type",
+                      value: "text/css"
+                    }
+                  ]
+                }
+              ),
+              window: (Weak),
+              parent: (Weak),
+              first_child: Some(
+                RefCell {
+                  value: Node {
+                    kind: Text(
+                      "h1 {\n        color: orange;\n     }\n\n      .red {\n        background-color: red;\n     }\n    "
+                    ),
+                    window: (Weak),
+                    parent: (Weak),
+                    first_child: None,
+                    last_child: (Weak),
+                    previous_sibling: (Weak),
+                    next_sibling: None
+                  }
+                }
+              ),
+              last_child: (Weak),
+              previous_sibling: (Weak),
+              next_sibling: None
+              }
+            }
+          ),
+          last_child: (Weak),
+          previous_sibling: (Weak),
+          next_sibling: Some(
+            RefCell {
+              value: Node {
+                kind: Element(
+                  Element {
+                    kind: Body,
+                    attributes: []
+                  }
+                ),
+                window: (Weak),
+                parent: (Weak),
+                  first_child: Some(
+                    RefCell {
+                      value: Node {
+                      kind: Element(
+                        Element {
+                          kind: H1,
+                          attributes: []
+                        }
+                      ),
+                      window: (Weak),
+                      parent: (Weak),
+                      first_child: Some(
+                        RefCell {
+                          value: Node {
+                            kind: Text("Test Page"),
+                            window: (Weak),
+                            parent: (Weak),
+                            first_child: None,
+                            last_child: (Weak),
+                            previous_sibling: (Weak),
+                            next_sibling: None
+                          }
+                        }
+                      ),
+                      last_child: (Weak),
+                      previous_sibling: (Weak),
+                        next_sibling: Some(
+                          RefCell {
+                            value: Node {
+                              kind: Element(
+                                Element {
+                                  kind: P,
+                                  attributes: [
+                                    Attribute {
+                                      name: "class",
+                                      value: "red"
+                                    }
+                                  ]
+                                }
+                              ),
+                              window: (Weak),
+                              parent: (Weak),
+                              first_child: Some(
+                                RefCell {
+                                  value: Node {
+                                    kind: Text("this is a test page with red backgound color."),
+                                    window: (Weak),
+                                    parent: (Weak),
+                                    first_child: None,
+                                    last_child: (Weak),
+                                    previous_sibling: (Weak),
+                                    next_sibling: None
+                                  }
+                                }
+                              ),
+                              last_child: (Weak),
+                              previous_sibling: (Weak),
+                              next_sibling: None
+                            }
+                          }
+                        )
+                      }
+                    }
+                  ),
+                last_child: (Weak),
+                previous_sibling: (Weak),
+                next_sibling: None
+              }
+            }
+          )
+          }
+          }
+          ),
+        last_child: (Weak),
+        previous_sibling: (Weak),
+        next_sibling: None
+        }
+      }
+    ),
+    last_child: (Weak),
+    previous_sibling: (Weak),
+    next_sibling: None
+  }
+}

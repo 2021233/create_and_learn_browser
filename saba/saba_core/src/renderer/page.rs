@@ -14,6 +14,7 @@ use alloc::rc::Weak;
 use alloc::string::String;
 use alloc::vec::Vec;
 use core::cell::RefCell;
+use noli::println;
 
 #[derive(Debug, Clone)]
 pub struct Page {
@@ -51,6 +52,7 @@ impl Page {
         };
 
         let layout_view = LayoutView::new(dom, &style);
+        println!("{:?}", layout_view);
 
         self.layout_view = Some(layout_view);
     }
