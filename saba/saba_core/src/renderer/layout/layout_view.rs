@@ -12,6 +12,7 @@ use crate::renderer::layout::layout_object::LayoutSize;
 use alloc::rc::Rc;
 use alloc::vec::Vec;
 use core::cell::RefCell;
+use noli::println;
 
 #[derive(Debug, Clone)]
 pub struct LayoutView {

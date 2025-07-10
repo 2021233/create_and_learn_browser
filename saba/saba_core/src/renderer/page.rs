@@ -37,6 +37,7 @@ impl Page {
     fn paint_tree(&mut self) {
         if let Some(layout_view) = &self.layout_view {
             self.display_items = layout_view.paint();
+            println!("{:?}", self.display_items);
         }
     }
 
@@ -52,7 +53,6 @@ impl Page {
         };
 
         let layout_view = LayoutView::new(dom, &style);
-        println!("{:?}", layout_view);
 
         self.layout_view = Some(layout_view);
     }
